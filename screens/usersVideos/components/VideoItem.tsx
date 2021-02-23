@@ -14,7 +14,6 @@ export class VideoItem extends PureComponent<VideoItemProps> {
         <Video
           source={{uri: this.props.url}}
           style={styles.backgroundVideo}
-          posterResizeMode={'contain'}
           resizeMode={'contain'}
           paused={!this.props.isActive}
         />

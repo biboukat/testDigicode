@@ -15,29 +15,20 @@ interface IItem {
   index: number;
 }
 
-export const VideoFeed = ({}) => {
-  const navigation = useNavigation();
+export const LikedVideo = ({}) => {
   const isFocused = useIsFocused();
-  const {likedVideo, likeVideo, unlikeVideo} = useUserVideos();
+  const {likedVideo} = useUserVideos();
   const [activeItemIndex, setActiveItemIndex] = useState<number>(0);
-
-  const onMyVideoPress = () => {
-    navigation.navigate('UserVideos');
-  };
-  const onLikedVideoPress = () => {
-    navigation.navigate('LikedVideo');
-  };
 
   const renderItem = ({item, index}: IItem) => {
     return (
       <VideoItem url={item} isActive={index === activeItemIndex && isFocused} />
     );
   };
-  const isLiked = likedVideo.includes(videoList[activeItemIndex]);
   return (
     <View style={styles.container}>
       <Carousel
-        data={videoList}
+        data={likedVideo}
         renderItem={renderItem}
         itemHeight={height}
         sliderHeight={height}
@@ -49,26 +40,6 @@ export const VideoFeed = ({}) => {
           setActiveItemIndex(index);
         }}
       />
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={onMyVideoPress}>
-          <Text>{'my videos'}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            isLiked
-              ? unlikeVideo(videoList[activeItemIndex])
-              : likeVideo(videoList[activeItemIndex]);
-          }}>
-          <Text>{isLiked ? 'unlike' : 'Like'}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={onLikedVideoPress}>
-          <Text>{'liked videos'}</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

@@ -9,6 +9,7 @@ import {VideoFeed} from './screens/videoFeed';
 import {Camera} from './screens/camera';
 import {UserVideos} from './screens/usersVideos';
 import {UsersVideosContext, useUserVideos} from './Providers';
+import {LikedVideo} from './screens/likedVideo';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -31,6 +32,8 @@ const App = () => {
           <Stack.Screen name={'Tabs'} component={Tabs} />
 
           <Stack.Screen name={'UserVideos'} component={UserVideos} />
+
+          <Stack.Screen name={'LikedVideo'} component={LikedVideo} />
         </Stack.Navigator>
       </NavigationContainer>
     </UsersVideosContext.Provider>
