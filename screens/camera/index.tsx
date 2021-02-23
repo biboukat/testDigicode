@@ -2,9 +2,12 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useIsFocused} from '@react-navigation/core';
 import {RNCamera, Constants} from 'react-native-camera';
+import {useUserVideos} from '../../Providers';
 
 export const Camera = () => {
   const isFocused = useIsFocused();
+  const {saveVideo} = useUserVideos();
+
   const [isRecording, setRecording] = useState<boolean>(false);
   const [type, setType] = useState<keyof Constants['Type']>(
     RNCamera.Constants.Type.front,
@@ -18,7 +21,7 @@ export const Camera = () => {
         if (promise) {
           setRecording(true);
           const data = await promise;
-          console.warn('takeVideo', data);
+          saveVideo(data.uri);
         }
       } catch (e) {
         console.error(e);

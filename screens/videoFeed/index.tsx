@@ -1,5 +1,7 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, StyleSheet, Text} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Carousel from 'react-native-snap-carousel';
 
 import {videoList} from '../../data/videos';
@@ -12,14 +14,19 @@ interface IItem {
   index: number;
 }
 
-export const VideoFeed = () => {
+export const VideoFeed = ({}) => {
+  const navigation = useNavigation();
   const [activeItemIndex, setActiveItemIndex] = useState<number>(0);
+
+  const onMyVideoPress = () => {
+    navigation.navigate('UserVideos');
+  };
 
   const renderItem = ({item, index}: IItem) => {
     return <VideoItem url={item} isActive={index === activeItemIndex} />;
   };
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <Carousel
         data={videoList}
         renderItem={renderItem}
@@ -33,6 +40,35 @@ export const VideoFeed = () => {
           setActiveItemIndex(index);
         }}
       />
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={onMyVideoPress}>
+          <Text>{'my videos'}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Text>{'liked videos'}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    top: 30,
+    left: 16,
+    right: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+});
